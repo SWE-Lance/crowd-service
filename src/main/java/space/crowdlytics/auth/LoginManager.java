@@ -25,7 +25,7 @@ public class LoginManager {
             loggedInStores.put(ownerInfo.getId(), new StoreModel(
                     ownerInfo.getId(),
                     UUID.randomUUID().toString(),
-                    "store-" + UUID.randomUUID().toString(),
+                    "Store",
                     new ArrayList<>(),
                     0,
                     50,
