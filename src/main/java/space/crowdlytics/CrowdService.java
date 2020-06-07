@@ -6,11 +6,12 @@ import com.google.gson.GsonBuilder;
 import space.crowdlytics.auth.LoginManager;
 import space.crowdlytics.auth.LoginRoute;
 import space.crowdlytics.counter.CountRoute;
+import space.crowdlytics.store.StoreInfoRoute;
+import space.crowdlytics.store.StoreListRoute;
 import space.crowdlytics.store.StoreRoute;
+import space.crowdlytics.store.SubscribeRoute;
 
-import static spark.Spark.patch;
-import static spark.Spark.post;
-import static spark.Spark.put;
+import static spark.Spark.*;
 
 public class CrowdService {
 
@@ -31,6 +32,9 @@ public class CrowdService {
     public void registerRoutes() {
         post("/login", "application/json", new LoginRoute(this), gson::toJson);
         patch("/api/store", "application/json", new StoreRoute(this), gson::toJson);
+        get("/api/store", "application/json", new StoreInfoRoute(this), gson::toJson);
+        get("/api/store/list", "application/json", new StoreListRoute(this), gson::toJson);
+        post("/api/store/subscribe", "application/json", new SubscribeRoute(this));
         put("/api/store/count", "application/json", new CountRoute(this), gson::toJson);
     }
 
