@@ -10,6 +10,7 @@ import space.crowdlytics.store.StoreInfoRoute;
 import space.crowdlytics.store.StoreListRoute;
 import space.crowdlytics.store.StoreRoute;
 import space.crowdlytics.store.SubscribeRoute;
+import spark.Spark;
 
 import static spark.Spark.*;
 
@@ -26,6 +27,9 @@ public class CrowdService {
 
     public void start() {
         System.out.println("Initializing service...");
+        Spark.exception(Exception.class, (exception, request, response) -> {
+            exception.printStackTrace();
+        });
         registerRoutes();
     }
 
@@ -36,7 +40,7 @@ public class CrowdService {
         get("/api/store", "application/json", new StoreInfoRoute(this), gson::toJson);
         get("/api/store/list", "application/json", new StoreListRoute(this), gson::toJson);
         post("/api/store/subscribe", "application/json", new SubscribeRoute(this));
-        put("/api/store/count", "application/json", new CountRoute(this), gson::toJson);
+        post("/api/store/count", "application/json", new CountRoute(this), gson::toJson);
     }
 
     public LoginManager getLoginManager() {

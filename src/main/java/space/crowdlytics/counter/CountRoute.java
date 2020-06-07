@@ -19,6 +19,8 @@ public class CountRoute implements Route {
     public Object handle(Request request, Response response) throws Exception {
         JsonObject root = context.getGson().toJsonTree(request.body()).getAsJsonObject();
         StoreModel store = context.getLoginManager().getLoggedInStores().get(root.get("owner_id").getAsString());
+        System.out.println(store);
+        System.out.println(store.getCount());
         store.setCount(store.getCount() + 1);
         return new Count(store.getCount());
     }
