@@ -30,6 +30,7 @@ public class CrowdService {
     }
 
     public void registerRoutes() {
+        before((req, res) -> res.header("Access-Control-Allow-Origin", "*"));
         post("/login", "application/json", new LoginRoute(this), gson::toJson);
         patch("/api/store", "application/json", new StoreRoute(this), gson::toJson);
         get("/api/store", "application/json", new StoreInfoRoute(this), gson::toJson);
