@@ -1,6 +1,7 @@
 package space.crowdlytics.counter;
 
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import space.crowdlytics.CrowdService;
 import space.crowdlytics.store.StoreModel;
 import spark.Request;
@@ -17,7 +18,7 @@ public class CountRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        JsonObject root = context.getGson().toJsonTree(request.body()).getAsJsonObject();
+        JsonObject root = JsonParser.parseString(request.body()).getAsJsonObject();
         StoreModel store = context.getLoginManager().getLoggedInStores().get(root.get("owner_id").getAsString());
         System.out.println(store);
         System.out.println(store.getCount());

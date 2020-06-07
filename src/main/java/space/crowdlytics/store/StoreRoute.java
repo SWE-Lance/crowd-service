@@ -2,6 +2,7 @@ package space.crowdlytics.store;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import space.crowdlytics.CrowdService;
 import spark.Request;
 import spark.Response;
@@ -17,7 +18,7 @@ public class StoreRoute implements Route {
 
     @Override
     public Object handle(Request request, Response response) throws Exception {
-        JsonObject root = context.getGson().toJsonTree(request.body()).getAsJsonObject();
+        JsonObject root = JsonParser.parseString(request.body()).getAsJsonObject();
         StoreModel store = context.getLoginManager().getLoggedInStores().get(root.get("owner_id").getAsString());
         store.setMax(root.get("max").getAsInt());
         store.setLocation(root.get("latitude").getAsDouble(), root.get("longitude").getAsDouble());
